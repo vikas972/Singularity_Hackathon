@@ -1,11 +1,10 @@
 import os
-
 import openai
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, Response, jsonify
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
+from camera import *
 
 @app.route("/", methods=("GET", "POST"))
 def index():
@@ -30,6 +29,17 @@ def index():
     result = request.args.get("result")
     print(result)
     return render_template("index.html", result=result)
+
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen(VideoCamera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 
