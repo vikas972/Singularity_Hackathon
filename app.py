@@ -15,6 +15,7 @@ def index():
             model="text-davinci-002",
             prompt=generate_prompt(text),
             temperature=0.6,
+            max_tokens=150
         )
         # response = openai.Image.create(
         #     prompt=animal,
@@ -22,7 +23,8 @@ def index():
         #     size="1024x1024"
         #     )
         # image_url = response['data'][0]['url']
-        print(response.choices[0].text)
+        print(response.choices)
+        print(response)
         return redirect(url_for("index", result=response.choices[0].text))
 
     result = request.args.get("result")
@@ -32,6 +34,9 @@ def index():
 
 
 def generate_prompt(text):
+    print(text)
+    # if type(text)==int:
+    #     text = '''Tell me a funny Joke'''
     return text
 
 
