@@ -6,6 +6,9 @@ app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 from camera import *
 
+
+
+
 @app.route("/", methods=("GET", "POST"))
 def index():
     if request.method == "POST":
@@ -24,6 +27,7 @@ def index():
         # image_url = response['data'][0]['url']
         print(response.choices)
         print(response)
+        # frame,emotion = camera.get_frame()
         return redirect(url_for("index", result=response.choices[0].text))
 
     result = request.args.get("result")
@@ -32,7 +36,7 @@ def index():
 
 def gen(camera):
     while True:
-        frame = camera.get_frame()
+        frame,emotion = camera.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 

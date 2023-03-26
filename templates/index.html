@@ -1,95 +1,40 @@
-<!-- <!DOCTYPE html>
-<head>
-  <title>Mental wellbeing App</title>
-  <link
-    rel="shortcut icon"
-    href="{{ url_for('static', filename='man.png') }}"
-  />
-  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
-</head>
-
-<body>
-  <img src="{{ url_for('static', filename='man.png') }}" class="icon" width="500" height="50" />
-  <h4>Tell me a joke</h4>
-  <form action="/" method="post">
-    <input type="text" name="question" placeholder="Enter text" required />
-    <input type="submit" value="Generate Jokes" />
-  </form>
-  {% if result %}
-  <div class="result">
-    <pre>{{result}}</pre>
-  </div>
-  {% endif %}
-  <iframe width=”560″ height=”315″ src="https://www.youtube.com/embed/M7lc1UVf-VE" title="YouTube" frameborder=”0″ allow=”accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture” allowfullscreen></iframe>
-</body> -->
-
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Well Being App</title>
-        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <link rel = "stylesheet" href = "{{ url_for('static', filename='style.css') }}">
-        <script src = "{{ url_for('static', filename='main.js') }}" defer></script>
-    </head>
-    <body id = "body">
-        <div class="top-bar">
-            <!-- <nav class="navbar navbar-expand-sm fixed-top">
-                <div class="container-fluid">
-                  <a id = "home" class="navbar-brand" href="javascript:void(0)"><img src = "https://uploads-ssl.webflow.com/63617eb68a66008a1a2130a0/6377947e0aeae206d00d0a0f_Hero%20Hp%20Image%20Cropped.png" alt = "Logo" style = "width:40px;"> Oasis</a>
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse" id="mynavbar">
-                    <ul class="navbar-nav mr-auto">
-                      <li class="nav-item">
-                        <a id = "product"class="nav-link" href="javascript:void(0)">Product</a>
-                      </li>
-                      <li class="nav-item">
-                        <a id = "other" class="nav-link" href="javascript:void(0)">Other</a>
-                      </li>
-                    </ul>
-                  </div>
+  <head>
+    <title>Sample Page with Bootstrap, Animate.css, and Wow.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.compat.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
 
-                </div>
-            </nav> -->
-            <div class="header">
-                <div class="container hero">
-                    <div class="row">
-                        <div id = "desc" class="col-12 col-lg-6 col-xl-5 offset-xl-1">
-                          <!-- <img class ="outer-shadow" id="bg" class="center img-fluid" src="{{ url_for('video_feed') }}" /> -->
-                            <div id = "greeting">
-                                <h2><strong>Hello,</strong></h2>
-                                <h2 id = "guest-name"><strong>Visitor</strong></h2>
-                                <p>How was your day?<br></p>
-                                <form action="/" method="post">
-                                  <input type="text" name="question" placeholder="Enter text" required />
-                                  <button
-                                    id = "respondbtn" class="btn btn-light btn-lg action-button" type="button"><strong>Generate Jokes</strong><i class="fa fa-long-arrow-right ml-2"></i>
-                                </button>
-                                </form>
-                                {% if result %}
-                                <div class="result">
-                                  <pre>{{result}}</pre>
-                                </div>
-                                {% endif %}
-                      
-                                <div id = "mood">
-                                    <img class = "moodBtn" src = "https://www.svgrepo.com/download/309601/emoji-sad.svg">
-                                    <img class = "moodBtn" src = "https://www.svgrepo.com/show/372562/neutral-face.svg">
-                                    <img class = "moodBtn" src = "https://www.svgrepo.com/show/27273/smiley-with-closed-eyes-rounded-square-face.svg">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5 col-lg-5 offset-lg-1 offset-xl-0 d-none d-lg-block">
-                            <div class="minful-graphic">
+
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="chat-window caption-container">
+                      <div class="chat-header wow slideInLeft ">
+                        <h1>Hello Visitor</h1>
+                      </div>
+                      <div class="chat-body wow bounceInDown" data-wow-duration="2s" data-wow-delay="1s">
+                        <p>Our project is focused on improving<br> mental wellbeing using AI technology.</p>
+                      </div>
+                      <div>
+                        <button type="button" class="btn btn-primary grow-shrink" style="background: #3b71ca !important;    padding: 5px 31px 5px 31px;font-weight: 700;box-shadow: 0 4px 9px -4px #3b71ca;"><a href="#main" style="text-decoration: none;color: white;">Start</a></button>
+                    </div>
+                    </div>
+                  </div>
+                    <div class="col-md-6">
+                        <div class="minful-graphic animate__animated animate__fadeInRight">
                             <img class="meditate" src="https://uploads-ssl.webflow.com/605c9014503aa417fc87808b/605dfe176839c4cdd4f28420_Test%20image.png">
             
                             </div>
-                        </div>
                     </div>
-                    <svg id = "divider"
+            </div>
+            <svg id = "divider"
                     class="curve"
                     xmlns="http://www.w3.org/2000/svg"
                     version="1.1"
@@ -100,20 +45,61 @@
                     >
                     <path d="M0 100 C 20 0 50 0 100 100 Z"></path>
                     </svg>
-                    </div>
+        </div>
+    </div>
+
+
+   <section id="main" style="padding: 60px;margin-top: 30px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              Camera
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <img class ="outer-shadow" id="bg" class="center img-fluid" src="{{ url_for('video_feed') }}" /> 
+            <div class="card-body">
+              <img  id="bg" class="center img-fluid img-thumbnail " src="{{ url_for('video_feed') }}" /> 
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              Featured
+            </div>
+            <div class="card-body">
+              <form action="/" method="post">
+              <div class="mb-3">
+                
+                <textarea class="card-text form-control" name="question" id="question" placeholder="How was your day?" rows="5" required></textarea>
               </div>
-              <div class="col-md-6">
-                <form action="/" method="post">
-                  <input type="text" name="question" placeholder="Enter text" required />
-                  <button
-                    id = "respondbtn" class="btn btn-light btn-lg action-button" type="button"><strong>Generate Jokes</strong><i class="fa fa-long-arrow-right ml-2"></i>
+              <button
+                    id = "respondbtn" class="btn btn-primary" type="submit" style="width: 100%;color: white;font-weight: 700;">Submit
                 </button>
-                </form>
-              </div>
+           
+            </form>
+
+            <div style="padding:10px;box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);">
+                        
+              <b style="color:#000000a3;">
+                {{result}}
+              </b> 
+             
+             </div>
+              
             </div>
-    </body>
+          </div>
+        </div>
+      </div>
+    </div>
+   </section> 
+
+
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    <script>
+      new WOW().init();
+    </script>
+  </body>
 </html>

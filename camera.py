@@ -22,12 +22,7 @@ from yoloface import face_analysis
 import matplotlib.pyplot as plt
 import webbrowser
 
-
-
-
 face_cascade=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-ds_factor=0.6
-
 ds_factor=0.6
 
 emotion_model = Sequential()
@@ -49,8 +44,6 @@ emotion_model.load_weights('model.h5')
 cv2.ocl.setUseOpenCL(False)
 
 
-
-
 common_url = 'https://www.youtube.com/watch?v='
 angry = 'x9UHAuyipx8&ab_channel=AcousticMusicCollection'
 disgust = 'iKzRIweSBLA&list=PL7v1FHGMOadDghZ1m-jEIUnVUsGMT9jbH'
@@ -58,9 +51,7 @@ fear = 'UBBHpoW3AKA&list=PLmgutjZvzLyryoakC3VAlDptXy4ChQGC3&ab_channel=T-Series'
 happy = 'JGwWNGJdvx8&list=PLAQ7nLSEnhWTEihjeM1I-ToPDJEKfZHZu&ab_channel=EdSheeran'
 sad = 'UBBHpoW3AKA&list=PLmgutjZvzLyryoakC3VAlDptXy4ChQGC3&ab_channel=T-Series'
 surprise = 'UupJ9yX3_Bg&list=PLp4nDIl7X7Hd-XnuE5mwiaohwcdMXQMF9&ab_channel=TaylorSwift-Topic'
-
-
-
+start_time = time.time()
 
 emotion_dict = {0:"Angry",1:"Disgusted",2:"Fearful",3:"Happy",4:"Neutral",5:"Sad",6:"Surprised"}
 music_dist={0:"songs/angry.csv",1:"songs/disgusted.csv ",2:"songs/fearful.csv",3:"songs/happy.csv",4:"songs/neutral.csv",5:"songs/sad.csv",6:"songs/surprised.csv"}
@@ -130,7 +121,6 @@ class WebcamVideoStream:
 
 ''' Class for reading video stream, generating prediction and recommendations '''
 class VideoCamera(object):
-	
 	def get_frame(self):
 		global cap1
 		global df1
@@ -140,46 +130,40 @@ class VideoCamera(object):
 		image=cv2.resize(image,(600,500))
 		gray=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
 		face_rects=face_cascade.detectMultiScale(gray,1.3,5)
-		
+		res=None
 		for (x,y,w,h) in face_rects:
+			global start_time
 			cv2.rectangle(image,(x,y-50),(x+w,y+h+10),(0,255,0),2)
 			roi_gray_frame = gray[y:y + h, x:x + w]
 			cropped_img = np.expand_dims(np.expand_dims(cv2.resize(roi_gray_frame, (48, 48)), -1), 0)
 			prediction = emotion_model.predict(cropped_img)
-            
-			# prediction = None
-			# try:
-			# 	prediction = DeepFace.analyze(cropped_img,actions=['emotion']) # predictions of deepface model
-			# except:
-			# 	prediction = DeepFace.analyze('webcam_cap_cropped.png',actions=['emotion']) # predictions of deepface model
-			# prediction = DeepFace.analyze(cropped_img,actions=['emotion'])
-			# print("You seem to be "+prediction[0]['dominant_emotion'])
 		
 			maxindex = int(np.argmax(prediction))
 			show_text[0] = maxindex 
+			res=emotion_dict[maxindex]
 			#print("===========================================",music_dist[show_text[0]],"===========================================")
 			#print(df1)
-			cv2.putText(image, emotion_dict[maxindex], (x+20, y-60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
-            # exec(code_block)
-			# end_time = time.time()
-			# running_time = end_time - start_time
-			# if True:
-			# 	emotion = emotion_dict[maxindex]
-			# 	if emotion == 'Angry':
-			# 		webbrowser.open(common_url+angry)
-			# 	elif emotion == 'Disgusted':
-			# 		webbrowser.open(common_url+disgust)
-			# 	elif emotion == 'Fearful':
-			# 		webbrowser.open(common_url+fear)
-			# 	elif emotion == 'Happy':
-			# 		webbrowser.open(common_url+happy)
-			# 	elif emotion == 'Sad':
-			# 		webbrowser.open(common_url+sad)
-			# 	elif emotion == 'Neutral':
-			# 		webbrowser.open(common_url+happy)
-			# 	else:
-			# 		print('EMotion Not Detected click the image again')
-				# start_time = time.time()
+			text_tod = "You seems "+emotion_dict[maxindex]+" .Let's watch video."
+			cv2.putText(image, text_tod, (x+20, y-60), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 2, cv2.LINE_AA)
+			end_time = time.time()
+			running_time = end_time - start_time
+			if running_time>=50:
+				emotion = emotion_dict[maxindex]
+				if emotion == 'Angry':
+					webbrowser.open(common_url+angry)
+				elif emotion == 'Disgusted':
+					webbrowser.open(common_url+disgust)
+				elif emotion == 'Fearful':
+					webbrowser.open(common_url+fear)
+				elif emotion == 'Happy':
+					webbrowser.open(common_url+happy)
+				elif emotion == 'Sad':
+					webbrowser.open(common_url+sad)
+				elif emotion == 'Neutral':
+					webbrowser.open(common_url+happy)
+				else:
+					print('EMotion Not Detected click the image again')
+				start_time = time.time()
 			
 		global last_frame1
 		last_frame1 = image.copy()
@@ -187,7 +171,7 @@ class VideoCamera(object):
 		img = Image.fromarray(last_frame1)
 		img = np.array(img)
 		ret, jpeg = cv2.imencode('.jpg', img)
-		return jpeg.tobytes()
+		return jpeg.tobytes(),res
 
 # def music_rec():
 # 	# print('---------------- Value ------------', music_dist[show_text[0]])
