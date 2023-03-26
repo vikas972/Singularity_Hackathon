@@ -3,6 +3,8 @@ import openai
 from flask import Flask, redirect, render_template, request, url_for, Response, jsonify
 
 app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
 from camera import *
 
