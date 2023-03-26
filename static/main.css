@@ -64,3 +64,11 @@ input[type="submit"] {
   font-weight: bold;
   margin-top: 40px;
 }
+
+
+.home_page01{
+  font-weight: 700;
+  color: #ff9b21;
+  background: black;
+  padding: 10px;
+}
