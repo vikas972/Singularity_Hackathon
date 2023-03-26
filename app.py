@@ -7,13 +7,15 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 from camera import *
-emotion = None
 
+emotion = "https://youtu.be/2Vv-BfVoq4g"
+photo = "https://content.wepik.com/statics/8773130/preview-page0.jpg"
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     result = ""
     global emotion
+    global photo
     if request.method == "POST":
         text = request.form["question"]
         response = openai.Completion.create(
@@ -25,7 +27,7 @@ def index():
         if response.choices:
             result = response.choices[0].text
         frame,emotion,photo = VideoCamera().get_frame()
-    return render_template("index.html", result=result,emotion = emotion,photo=photo)
+    return render_template("index.html", result=result,emotion = emotion, photo=photo)
 
 
 
