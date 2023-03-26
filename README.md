@@ -4,12 +4,12 @@
 
 1. If you don’t have Python installed, [install it from here](https://www.python.org/downloads/)
 
-2. Clone this repository
+2. Clone this repository: https://github.com/vikas972/Singularity_Hackathon.git
 
 3. Navigate into the project directory
 
    ```bash
-   $ cd openai-quickstart-python
+   $ cd Singularity_Hackathon-master
    ```
 
 4. Create a new virtual environment
@@ -39,4 +39,4 @@
    $ flask run
    ```
 
-You should now be able to access the app at [http://localhost:5000](http://localhost:5000)! For the full context behind this example app, check out the [tutorial](https://beta.openai.com/docs/quickstart).
+You should now be able to access the app at [http://localhost:5000](http://localhost:5000)!
